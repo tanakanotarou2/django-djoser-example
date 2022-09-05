@@ -22,4 +22,3 @@ class QuestionDetailSerializer(ModelSerializer):
     class Meta:
         model = Question
         fields = "__all__"
-

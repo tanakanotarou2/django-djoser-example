@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "drf_spectacular",
+    "rest_framework.authtoken",
+    "djoser",
     "polls",
 ]
 
@@ -49,7 +51,7 @@ ROOT_URLCONF = "project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -172,5 +174,14 @@ SPECTACULAR_SETTINGS = {
     # /api/ の prefix を除く
     # TODO: これをいれていると swagger の リクエスト先 URL も /api/ が省かれて 404 エラーとなる。
     #       設定方法がわからなかったので、代替案として env で切り替えられるようにしている。 swagger url の設定方法を確認する
-    "SCHEMA_PATH_PREFIX_TRIM": "/api/" if os.getenv("ENABLE_SCHEMA_PATH_PREFIX_TRIM", "1") == "1" else "",
+    "SCHEMA_PATH_PREFIX_TRIM": "/api/" if os.getenv("ENABLE_SCHEMA_PATH_PREFIX_TRIM", "0") == "1" else "",
 }
+
+# email
+# ==============================================================
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# djoser
+# https://djoser.readthedocs.io/en/latest/
+# ==============================================================
+DJOSER = {"SEND_ACTIVATION_EMAIL": True, "ACTIVATION_URL": "http://example.com/activate/{uid}/{token}"}
